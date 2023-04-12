@@ -1,24 +1,6 @@
-# ezbf_playground
+# EZBrainfuck Playground
+[EZBrainfuck](https://github.com/koikotya/EZBrainfuck)をブラウザ上で実行できます。
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+EZBrainfuck自体にかなり不具合があるため適切なエラーが表示されない場合がかなりあります。
+（コード生成に失敗しているのにSuccessfully generated codeと表示されるなど）
+ご了承の上お使いください。
