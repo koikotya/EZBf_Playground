@@ -29,14 +29,22 @@ export default {
   },
   data() {
     return {
+      ezbfModule: null,
       wasmModule: null,
     };
   },
   async mounted() {
     try {
-      const yourCompilerModule = await import("./module/ezbf.js");
-
-      const wasmModule = await yourCompilerModule.default({
+      const ezbfModule = await import("./module/ezbf.js");
+      this.ezbfModule = ezbfModule;
+    } catch (error) {
+      console.error("Failed to import wasm module:", error);
+    }
+  },
+  methods: {
+  async runEZBf() {
+    try {
+      const wasmModule = await this.ezbfModule.default({
         onRuntimeInitialized: () => {
           console.log("WASM module initialized");
         },
@@ -49,22 +57,19 @@ export default {
     } catch (error) {
       console.error("Failed to load wasm module:", error);
     }
-  },
-  methods: {
-  async runEZBf() {
+
     try {
-      this.$refs.outputAreaRef.setOutput("");
       const input = this.$refs.codeInputRef.getCode();
       const result = await this.wasmModule.ccall('gen_code', 'string', ['string'], [input]);
-      console.log("Function result:", result);
+      // console.log("Function result:", result);
       this.$refs.outputAreaRef.setOutput(result);
     } catch (error) {
       console.error("Error running gen_code:", error);
     }
+
     try {
-      this.$refs.errorAreaRef.setError("");
       const result = await this.wasmModule.ccall('get_err', 'string', [], []);
-      console.log("stderr:", result);
+      // console.log("stderr:", result);
       this.$refs.errorAreaRef.setError(result);
     } catch (error) {
       console.error("Error running get_err:", error);
